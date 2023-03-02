@@ -3,7 +3,7 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 // Get the score element
-const score = document.getElementById("score");
+const score = document.querySelector(".score");
 
 // Set canvas properties
 const canvasColor = "black";
