@@ -32,3 +32,8 @@ canvas {
     padding-right: 10px;
     text-shadow: 1px 1px green;
 }
+
+.instruction {
+    text-align: center;
+    font-size: 10px;
+}
