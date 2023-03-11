@@ -1,5 +1,5 @@
 // Get the canvas and its context
-const canvas = document.getElementById("canvas");
+const canvas = document.getElementById("miCanvas");
 const ctx = canvas.getContext("2d");
 
 // Get the score element
@@ -89,19 +89,34 @@ function createGame() {
     document.addEventListener("keydown", (e) => {
         // Start the game by pressing the space bar
         if (e.key === " ") {
-            // If the game didn't start, start it by going to the right
+            // If the game isn't started start it going to the right
             if (!gameStarted) {
                 currentDirection = "right";
                 gameStarted = true;
                 gameLoop();
             } else {
-                // Otherwise use the space bar to pause
+                // Else use te spacebar to put in pause
                 togglePause();
             }
         }
 
         changeDirection(e);
     });
+}
+
+function lookIfWon() {
+    if (allPositions.length === ocuppiedPositions.length) {
+        clearInterval(interval);
+        return alert("Felicidades, ganaste el juego");
+    }
+}
+
+function lookIfSnakeAetTheApple() {
+    if (String(snakeCurrentPosition) === String(applePosition)) {
+        scoreCounter += 10;
+        score.innerHTML = `Score: ${scoreCounter}`;
+        return true;
+    }
 }
 
 function move(direction) {
@@ -113,14 +128,11 @@ function move(direction) {
 
     if (verifyColitions()) return;
 
-    // Look if the snake eat the apple
-    if (String(snakeCurrentPosition) === String(applePosition)) {
-        scoreCounter += 10;
-        score.innerHTML = `Score: ${scoreCounter}`;
+    if (lookIfSnakeAetTheApple()) {
         createApple();
     } else {
-        // If the snake didn't eat the apple in this move, make the end of the snake move
-        // by making its last position of the color of the canvas when the new move happen
+        /* If the snake didn't eat the apple in this move, make the end of the snake move
+        by making its last position of the color of the canvas when the new move happen */
 
         ctx.beginPath();
         ctx.fillStyle = canvasColor;
@@ -138,13 +150,6 @@ function move(direction) {
 
     // Draw the snake adding the new current position
     drawSnake();
-}
-
-function lookIfWon() {
-    if (allPositions.length === ocuppiedPositions.length) {
-        clearInterval(interval);
-        return alert("Felicidades, ganaste el juego");
-    }
 }
 
 function verifyColitions() {
@@ -204,6 +209,8 @@ function changeDirection(e) {
         return;
     }
 
+    directionChanged = true;
+
     // Set the new direction
     switch (e.key) {
         case "ArrowLeft":
@@ -226,10 +233,12 @@ function changeDirection(e) {
 function createApple() {
     // Convert the occupied positions array to a string array to make it easy to find the free positions
     const strOcupPos = ocuppiedPositions.map(String);
+
     // Get all positions that are not occupied by also converting each position to string
     const freePositions = allPositions.filter(
         (pos) => !strOcupPos.includes(String(pos))
     );
+
     // Select a random position from the free positions
     const freePositionIndex = Math.floor(Math.random() * freePositions.length);
     applePosition = freePositions[freePositionIndex];
@@ -246,6 +255,8 @@ function createApple() {
     );
     ctx.fill();
     ctx.closePath();
+
+    return true;
 }
 
 function drawSnake() {
