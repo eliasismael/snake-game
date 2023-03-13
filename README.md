@@ -1,8 +1,8 @@
-#Snake Game
+# Snake Game
 
 This is a basic implementation of the classic Snake game using HTML5 Canvas and JavaScript.
 
-#How to play
+# How to play
 
 Load the game on your browser.
 Press the space bar to start the game. The snake will start moving to the right.
@@ -13,7 +13,7 @@ If the snake collides with the walls or its own body, the game is over.
 If the player occupies all possible positions on the canvas, the game is won.
 The game can be paused at any time by pressing the space bar.
 
-#Code overview
+# Code overview
 
 The game is built using HTML5 Canvas and JavaScript. The game board is represented by a 300x300 pixels canvas element. The snake and apple are represented by blocks of 15x15 pixels.
 
