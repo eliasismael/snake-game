@@ -209,8 +209,6 @@ function changeDirection(e) {
         return;
     }
 
-    directionChanged = true;
-
     // Set the new direction
     switch (e.key) {
         case "ArrowLeft":
